@@ -3,7 +3,7 @@ package com.timain.web.sys.pojo;
 import lombok.Data;
 
 import javax.persistence.*;
-
+import java.util.Set;
 
 
 /**
@@ -59,4 +59,9 @@ public class User {
      * 是否可用
      */
     private Integer available;
+
+    @ManyToMany(targetEntity = Role.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(name = "sys_role_user", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "roleId")})
+    private Set<Role> roles;
 }
