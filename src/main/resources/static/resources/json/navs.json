@@ -1,0 +1,153 @@
+[
+		{
+			"title": "基础管理",
+			"icon": "icon-text",
+			"href": "page/news/newsList.html",
+			"spread": false,
+			"children": [
+				{
+					"title": "客户管理",
+					"icon": "&#xe61c;",
+					"href": "page/news/newsList.html",
+					"spread": false
+				},
+				{
+					"title": "供应商管理",
+					"icon": "&#xe600;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				},
+				{
+					"title": "商品管理",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				}
+			]
+		},
+		{
+			"title": "进货管理",
+			"icon": "&#xe634;",
+			"href": "page/img/images.html",
+			"spread": false,
+			"children": [
+				{
+					"title": "商品进货",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "商品退货",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				}
+			]
+		},
+		{
+			"title": "销售管理",
+			"icon": "&#xe634;",
+			"href": "page/img/images.html",
+			"spread": false,
+			"children": [
+				{
+					"title": "商品销售",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "销售退货",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				}
+			]
+		},
+		{
+			"title": "系统管理",
+			"icon": "&#xe634;",
+			"href": "page/img/images.html",
+			"spread": false,
+			"children": [
+				{
+					"title": "菜单管理",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "部门管理",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				},
+				{
+					"title": "角色管理",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				},
+				{
+					"title": "用户管理",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				},
+				{
+					"title": "修改密码",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				},{
+					"title": "修改头像",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				}
+			]
+		},
+		{
+			"title": "其他页面",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+			{
+					"title": "日志管理",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "图标管理",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "404页面",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "登录",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				}
+			]
+		}
+	]

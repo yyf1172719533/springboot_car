@@ -1,0 +1,64 @@
+#≈‰÷√∂Àø⁄∫≈
+server:
+  port: 8989
+
+#≈‰÷√ ˝æ›‘¥
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/car?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=UTC
+      username: root
+      password: root
+      max-active: 25
+      max-wait: 1000
+      initial-size: 1
+      filters: stat,log4j,wall
+      validation-query: SELECT 'x'
+      enable: true
+
+      #º‡øÿ≈‰÷√
+      stat-view-servlet:
+        enabled: true
+        login-username: root
+        login-password: 123456
+        allow:
+        deny:
+        url-pattern: /druid/*
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  #redis≈‰÷√
+  redis:
+    host: 192.168.254.129
+    port: 6379
+    jedis:
+      pool:
+        max-idle: 20
+        max-active: 100
+        min-idle: 10
+        
+        
+  #jpa≈‰÷√      
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+#shiroµƒ≈‰÷√
+shiro:
+  hash-algorithm-name: md5
+  hash-iterations: 2
+  anon-urls:
+    - /index.html*
+    - /sys/toLogin*
+    - /login/login*
+    - /resources/**
+  login-url: /index.html
+  log-out-url: /login/logout*
+  authc-ulrs:
+    - /**
+
