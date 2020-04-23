@@ -60,7 +60,7 @@ public class UserRealm extends AuthorizingRealm {
             menuLists.add(menu.getTitle());
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        if (user.getType()== Constants.USER_TYPE_SUPER) {
+        if (user.getType() == Constants.USER_TYPE_SUPER) {
             info.addStringPermissions(menuLists);
         } else {
             if (null!=menus && menus.size()>0) {

@@ -19,4 +19,10 @@ public class Constants {
      */
     public static final Integer USER_TYPE_SUPER = 1;
     public static final Integer USER_TYPE_NORMAL = 2;
+
+    /**
+     * 状态码
+     */
+    public static final Integer OK = 200;
+    public static final Integer ERROR = 200;
 }

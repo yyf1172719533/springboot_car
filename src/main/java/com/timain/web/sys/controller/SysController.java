@@ -20,4 +20,22 @@ public class SysController {
     public String toLogin() {
         return "sys/index/login";
     }
+
+    /**
+     * 跳转到首页
+     * @return
+     */
+    @RequestMapping("toIndex")
+    public String toIndex() {
+        return "sys/index/index";
+    }
+
+    /**
+     * 跳转到后台首页
+     * @return
+     */
+    @RequestMapping("toMain")
+    public String toMain() {
+        return "sys/index/main";
+    }
 }

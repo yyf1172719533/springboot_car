@@ -3,6 +3,7 @@ package com.timain.web.sys.pojo;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 
@@ -14,7 +15,9 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "sys_user")
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = -6410410206119734977L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

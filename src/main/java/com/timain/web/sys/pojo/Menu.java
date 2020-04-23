@@ -3,6 +3,7 @@ package com.timain.web.sys.pojo;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 /**
@@ -13,8 +14,10 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "sys_menu")
-public class Menu {
+public class Menu implements Serializable {
 
+    private static final long serialVersionUID = -4982379745228645854L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

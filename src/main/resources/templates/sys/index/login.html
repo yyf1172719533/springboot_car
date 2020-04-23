@@ -18,11 +18,11 @@
 		<div class="login_face"><img src="/resources/images/face.jpg" class="userAvatar"></div>
 		<div class="layui-form-item input-item">
 			<label for="userName">用户名</label>
-			<input type="text" placeholder="请输入用户名" autocomplete="off" id="userName" class="layui-input" lay-verify="required">
+			<input type="text" placeholder="请输入用户名" autocomplete="off" id="userName" name="loginName" class="layui-input" lay-verify="required">
 		</div>
 		<div class="layui-form-item input-item">
 			<label for="password">密码</label>
-			<input type="password" placeholder="请输入密码" autocomplete="off" id="password" class="layui-input" lay-verify="required">
+			<input type="password" placeholder="请输入密码" autocomplete="off" id="password" name="password" class="layui-input" lay-verify="required">
 		</div>
 		<div class="layui-form-item input-item" id="imgCode">
 			<label for="code">验证码</label>
@@ -44,10 +44,20 @@
 
 		//登录按钮
 		form.on("submit(login)",function(data){
-			$(this).text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
-			setTimeout(function(){
-				window.location.href = "/layuicms2.0";
-			},1000);
+			var btn = $(this);
+			//设置登录按钮不可点击
+			$(btn).text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
+			$.post("/login/login", data.field, function (res) {
+				//设置登录按钮可点击   防止前端重复点击登录按钮
+				btn.text("登录").attr("disabled", false).removeClass("layui-disabled");
+				layer.msg(res.msg);
+				if (res.code != 200) {
+					layer.msg(res.msg);
+				} else {
+					layer.msg(res.msg);
+					location.href = "/sys/toIndex";
+				}
+			});
 			return false;
 		})
 
