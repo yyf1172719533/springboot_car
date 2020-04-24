@@ -67,4 +67,5 @@ public class User implements Serializable {
     @JoinTable(name = "sys_role_user", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "userId")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "roleId")})
     private Set<Role> roles;
+    
 }

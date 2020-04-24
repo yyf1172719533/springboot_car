@@ -19,13 +19,20 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuMapper menuMapper;
 
-    /**
-     * 查询所有菜单
-     *
-     * @return
-     */
+
     @Override
     public List<Menu> findAll() {
         return menuMapper.findAll();
+    }
+
+    /**
+     * 查询所有菜单
+     *
+     * @param available
+     * @return
+     */
+    @Override
+    public List<Menu> findAllMenus(Integer available) {
+        return menuMapper.findAllByAvailable(available);
     }
 }

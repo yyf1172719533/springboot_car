@@ -1,8 +1,8 @@
-#ÅäÖÃ¶Ë¿ÚºÅ
+#é…ç½®ç«¯å£å·
 server:
   port: 8989
 
-#ÅäÖÃÊı¾İÔ´
+#é…ç½®æ•°æ®æº
 spring:
   datasource:
     druid:
@@ -17,7 +17,7 @@ spring:
       validation-query: SELECT 'x'
       enable: true
 
-      #¼à¿ØÅäÖÃ
+      #é…ç½®druidè¿æ¥æ± 
       stat-view-servlet:
         enabled: true
         login-username: root
@@ -30,7 +30,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
-  #redisÅäÖÃ
+  #redisé…ç½®
   redis:
     host: 192.168.254.129
     port: 6379
@@ -41,17 +41,20 @@ spring:
         min-idle: 10
         
         
-  #jpaÅäÖÃ      
+  #jpaé…ç½®    
   jpa:
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+        enable_lazy_load_no_trans: true
+    hibernate:
+      ddl-auto: update
 
-#shiroµÄÅäÖÃ
+#shiroé…ç½®
 shiro:
   hash-algorithm-name: md5
-  hash-iterations: 2
+  hash-iterations: 1024
   anon-urls:
     - /index.html*
     - /sys/toLogin*
@@ -62,3 +65,9 @@ shiro:
   authc-ulrs:
     - /**
 
+#åˆ†é¡µæ’ä»¶
+pagehelper:
+  helper-dialect: mysql
+  params: count
+  reasonable: true
+  support-methods-arguments: true

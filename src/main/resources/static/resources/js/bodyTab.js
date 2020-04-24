@@ -1,9 +1,3 @@
-/*
-	@Author: 驊驊龔頾
-	@Time: 2017-10
-	@Tittle: bodyTab
-	@Description: 点击对应按钮添加新窗口
-*/
 var tabFilter,menu=[],liIndex,curNav,delMenu,
     changeRefreshStr = window.sessionStorage.getItem("changeRefresh");
 layui.define(["element","jquery"],function(exports){
@@ -14,14 +8,14 @@ layui.define(["element","jquery"],function(exports){
 			this.tabConfig = {
 				openTabNum : undefined,  //最大可打开窗口数量
 				tabFilter : "bodyTab",  //添加窗口的filter
-				url : undefined  //获取菜单json地址
+				url : '/resources/json/navs.json'  //获取菜单json地址
 			}
 		};
     //生成左侧菜单
     Tab.prototype.navBar = function(strData){
         var data;
         if(typeof(strData) == "string"){
-            var data = JSON.parse(strData); //部分用户解析出来的是字符串，转换一下
+            data = JSON.parse(strData); //部分用户解析出来的是字符串，转换一下
         }else{
             data = strData;
         }
@@ -84,7 +78,7 @@ layui.define(["element","jquery"],function(exports){
 	Tab.prototype.render = function() {
 		//显示左侧菜单
 		var _this = this;
-		$(".navBar ul").html('<li class="layui-nav-item layui-this"><a data-url="page/main.html"><i class="layui-icon" data-icon=""></i><cite>后台首页</cite></a></li>').append(_this.navBar(dataStr)).height($(window).height()-210);
+		$(".navBar ul").html('<li class="layui-nav-item layui-this"><a data-url="sys/toMain"><i class="layui-icon" data-icon=""></i><cite>后台首页</cite></a></li>').append(_this.navBar(dataStr)).height($(window).height()-210);
 		element.init();  //初始化页面元素
 		$(window).resize(function(){
 			$(".navBar").height($(window).height()-210);

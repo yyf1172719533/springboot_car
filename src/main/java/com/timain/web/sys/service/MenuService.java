@@ -10,10 +10,13 @@ import java.util.List;
  * @Date 2020/4/22 0022 19:46
  */
 public interface MenuService {
+    
+    List<Menu> findAll();
 
     /**
      * 查询所有菜单
+     * @param available
      * @return
      */
-    List<Menu> findAll();
+    List<Menu> findAllMenus(Integer available);
 }

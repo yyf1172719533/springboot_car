@@ -1,8 +1,10 @@
 package com.timain.web.sys.service;
 
+import com.timain.web.sys.pojo.Menu;
 import com.timain.web.sys.pojo.Role;
 import com.timain.web.sys.pojo.User;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,4 +27,24 @@ public interface UserService {
      * @return
      */
     Set<Role> findRolesByUserId(Integer userId);
+
+    /**
+     * 查询用户总数
+     * @return
+     */
+    Long findCount();
+
+    /**
+     * 根据用户ID查询拥有菜单
+     * @param userId
+     * @return
+     */
+    Set<Menu> findMenusByUserId(Integer userId);
+
+    /**
+     * 根据用户ID查询所有可用菜单
+     * @param userId
+     * @return
+     */
+    List<Menu> findMenusAvailable(Integer userId);
 }

@@ -52,6 +52,7 @@ public class LoginController {
             loginInfo.setLoginName(userDTO.getUser().getRealName() + "-" + userDTO.getUser().getLoginName());
             loginInfo.setLoginTime(new Date());
             loginInfoService.save(loginInfo);
+            LoginUtils.getSession().setAttribute("loginInfo", loginInfo);
             return ResultObj.LOGIN_SUCCESS;
         } catch (Exception e) {
             return ResultObj.LOGIN_ERROR_NAME_OR_PWD;

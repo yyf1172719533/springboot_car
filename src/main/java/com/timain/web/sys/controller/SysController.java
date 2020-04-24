@@ -38,4 +38,13 @@ public class SysController {
     public String toMain() {
         return "sys/index/main";
     }
+
+    /**
+     * 跳转到用户中心
+     * @return
+     */
+    @RequestMapping("toUserList")
+    public String toUserList() {
+        return "sys/user/userList";
+    }
 }
