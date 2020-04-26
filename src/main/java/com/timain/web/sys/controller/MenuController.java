@@ -1,7 +1,9 @@
 package com.timain.web.sys.controller;
 
 import com.timain.web.sys.common.Constants;
+import com.timain.web.sys.common.DataGridView;
 import com.timain.web.sys.common.TreeNode;
+import com.timain.web.sys.common.TreeNodeBuilder;
 import com.timain.web.sys.pojo.Menu;
 import com.timain.web.sys.pojo.User;
 import com.timain.web.sys.service.MenuService;
@@ -29,7 +31,7 @@ public class MenuController {
     private UserService userService;
     
     @RequestMapping("loadAllMenus")
-    public List<TreeNode> findAllMenus() {
+    public DataGridView findAllMenus() {
         User user = (User) WebUtils.getSession().getAttribute("user");
         List<Menu> menuList = null;
         if (user.getType() == Constants.USER_TYPE_SUPER) {
@@ -50,6 +52,7 @@ public class MenuController {
             String target = menu.getTarget();
             nodeList.add(new TreeNode(id, pId, title, icon, href, spread, target));
         }
-        return nodeList;
+        List<TreeNode> nodes = TreeNodeBuilder.builder(nodeList, 1);
+        return new DataGridView(nodes);
     }
 }

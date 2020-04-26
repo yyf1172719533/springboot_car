@@ -20,7 +20,7 @@ public class NoticeController {
     private NoticeService noticeService;
 
     /**
-     * 分页查询所有公告信息
+     * 查询所有公告信息
      * @param noticeVO
      * @return
      */

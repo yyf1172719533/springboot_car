@@ -40,11 +40,20 @@ public class SysController {
     }
 
     /**
-     * 跳转到用户中心
+     * 跳转到用户管理页面
      * @return
      */
-    @RequestMapping("toUserList")
-    public String toUserList() {
+    @RequestMapping("toUserManager")
+    public String toUserManager() {
         return "sys/user/userList";
+    }
+
+    /**
+     * 跳转到公告管理页面
+     * @return
+     */
+    @RequestMapping("toNoticesManager")
+    public String toNoticesManager() {
+        return "sys/notices/NoticesInfo";
     }
 }

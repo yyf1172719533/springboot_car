@@ -1,6 +1,6 @@
 package com.timain.web.sys.service.impl;
 
-import com.github.pagehelper.Page;
+
 import com.github.pagehelper.PageHelper;
 import com.timain.web.sys.common.DataGridView;
 import com.timain.web.sys.mapper.NoticesMapper;
@@ -8,12 +8,16 @@ import com.timain.web.sys.pojo.Notices;
 import com.timain.web.sys.service.NoticeService;
 import com.timain.web.sys.vo.NoticeVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,8 +39,9 @@ public class NoticeServiceImpl implements NoticeService {
      */
     @Override
     public DataGridView findAllNotices(NoticeVO noticeVO) {
-        Page<Object> page = new Page<>(noticeVO.getPage(), noticeVO.getLimit());
-        List<Notices> notices = noticesMapper.findAll(((root, criteriaQuery, criteriaBuilder) -> {
+        //Page<Object> page = new Page<>(noticeVO.getPage(), noticeVO.getLimit());
+        PageRequest pageRequest = PageRequest.of(noticeVO.getPage() - 1, noticeVO.getLimit());
+        Page<Notices> page = noticesMapper.findAll((root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>();
             //模糊查询
             if (null!=noticeVO.getTitle() && noticeVO.getTitle()!="") {
@@ -69,8 +74,8 @@ public class NoticeServiceImpl implements NoticeService {
             if (null!=noticeVO.getStartTime()) {
                 predicateList.add(
                         criteriaBuilder.and(
-                                criteriaBuilder.ge(
-                                        root.get("startTime"), (Expression<? extends Number>) noticeVO.getStartTime()
+                            criteriaBuilder.greaterThanOrEqualTo(
+                                        root.<Date>get("createTime"), noticeVO.getStartTime()
                                 )
                         )
                 );
@@ -78,8 +83,8 @@ public class NoticeServiceImpl implements NoticeService {
             if (null!=noticeVO.getEndTime()) {
                 predicateList.add(
                         criteriaBuilder.and(
-                                criteriaBuilder.ge(
-                                        root.get("endTime"), (Expression<? extends Number>) noticeVO.getEndTime()
+                                criteriaBuilder.lessThanOrEqualTo(
+                                        root.<Date>get("createTime"), noticeVO.getEndTime()
                                 )
                         )
                 );
@@ -87,7 +92,7 @@ public class NoticeServiceImpl implements NoticeService {
             return criteriaBuilder.and(
                     predicateList.toArray(new Predicate[predicateList.size()])
             );
-        }));
-        return new DataGridView(page.getTotal(), notices);
+        }, pageRequest);
+        return new DataGridView(page.getTotalElements(), page.getContent());
     }
 }

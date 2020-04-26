@@ -8,7 +8,7 @@ layui.define(["element","jquery"],function(exports){
 			this.tabConfig = {
 				openTabNum : undefined,  //最大可打开窗口数量
 				tabFilter : "bodyTab",  //添加窗口的filter
-				url : '/resources/json/navs.json'  //获取菜单json地址
+				url : undefined  //获取菜单json地址
 			}
 		};
     //生成左侧菜单
