@@ -14,4 +14,6 @@ public interface LoginInfoService {
      * @param loginInfo
      */
     void save(LoginInfo loginInfo);
+    
+    
 }

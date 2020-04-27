@@ -22,4 +22,13 @@ public class ResultObj {
 
     public static final ResultObj LOGOUT_SUCCESS = new ResultObj(Constants.OK, "退出成功");
     public static final ResultObj LOGOUT_ERROR = new ResultObj(Constants.OK, "退出失败");
+    
+    public static final ResultObj ADD_SUCCESS = new ResultObj(Constants.OK, "添加成功");
+    public static final ResultObj ADD_ERROR = new ResultObj(Constants.OK, "添加失败");
+
+    public static final ResultObj UPDATE_SUCCESS = new ResultObj(Constants.OK, "修改成功");
+    public static final ResultObj UPDATE_ERROR = new ResultObj(Constants.OK, "修改失败");
+
+    public static final ResultObj DELETE_SUCCESS = new ResultObj(Constants.OK, "删除成功");
+    public static final ResultObj DELETE_ERROR = new ResultObj(Constants.OK, "删除失败");
 }

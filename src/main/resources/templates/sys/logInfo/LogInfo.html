@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>公告管理</title>
+    <title>日志管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -24,21 +24,15 @@
     <form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form layui-form-pane">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">公告标题</label>
+                <label class="layui-form-label">登录名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="title" autocomplete="off" class="layui-input">
+                    <input type="text" name="loginName" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">公告内容</label>
+                <label class="layui-form-label">登录IP</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="content" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">发布人</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="operName" autocomplete="off" class="layui-input">
+                    <input type="text" name="loginIp" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
@@ -66,63 +60,19 @@
 
 <!-- 数据表格开始 -->
 <div>
-    <table class="layui-hide" id="noticeInfoTable" lay-filter="noticeInfoTable"></table>
-    <div id="noticeInfoToolBar" style="display: none;">
-        <button type="button" lay-event="addNotice" class="layui-btn layui-btn-sm"><span class="layui-icon layui-icon-add-1"></span>添加公告</button>
+    <table class="layui-hide" id="loginInfoTable" lay-filter="loginInfoTable"></table>
+    <div id="loginInfoToolBar" style="display: none;">
         <button type="button" lay-event="batchDelete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>批量删除</button>
     </div>
-    <div id="noticeInfoRowBar" style="display: none;">
-        <button type="button" lay-event="update" class="layui-btn layui-btn-sm layui-btn-normal"><span class="layui-icon layui-icon-edit"></span>修改</button>
+    <div id="loginInfoRowBar" style="display: none;">
         <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>删除</button>
-        <button type="button" lay-event="select" class="layui-btn layui-btn-sm layui-btn-warm"><span class="layui-icon layui-icon-file"></span>查看</button>
     </div>
 </div>
 <!-- 数据表格结束 -->
 
-<!-- 添加和修改的弹出层开始 -->
-<div style="display: none;padding: 20px;" id="addOrUpdate">
-    <form class="layui-form"  lay-filter="dataFrm" id="dataFrm">
-        <div class="layui-form-item">
-            <label class="layui-form-label">公告标题</label>
-            <div class="layui-input-block">
-                <input type="text" name="id" style="display: none"/>
-                <input type="text" name="title" required="required" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">公告内容</label>
-            <div class="layui-input-block">
-                <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="content"></textarea>
-            </div>
-        </div>
-        <div class="layui-form-item" style="text-align: center;">
-            <div class="layui-input-block">
-                <button type="button" class="layui-btn" lay-submit="" lay-filter="doSubmit"><span class="layui-icon"></span>提交</button>
-                <button type="reset" id="resetBtn" class="layui-btn layui-btn-warm"><span class="layui-icon"></span>重置</button>
-            </div>
-        </div>
-    </form>
-</div>
-<!-- 添加和修改的弹出层结束 -->
-
-<!-- 查看弹出层开始 -->
-<div style="display: none;padding: 5px;" id="showInfo">
-    <h2 id="show_title" align="center"></h2>
-    <br>
-    <br>
-    <div style="text-align: right;">
-        发布人：<span id="show_operName"></span>
-        发布时间：<span id="show_createTime"></span>
-    </div>
-    <hr/>
-    <div id="show_content"></div>
-</div>
-<!-- 查看弹出层结束 -->
-
-
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
 <script type="text/javascript">
-    layui.use(['jquery', 'table', 'form', 'layer', 'laydate', 'layedit'], function () {
+    layui.use(['jquery', 'table', 'form', 'layer', 'laydate'], function () {
         var $ = layui.jquery;
         var table = layui.table;
         var form = layui.form;
@@ -142,10 +92,10 @@
         
         //数据表格初始化
         var tableInfos = table.render({
-            elem: '#noticeInfoTable',
+            elem: '#loginInfoTable',
             url: '/notice/loadAllNotices',
-            toolbar: '#noticeInfoToolBar',//开启头部工具栏
-            title: '公告信息',
+            toolbar: '#loginInfoToolBar',//开启头部工具栏
+            title: '登录日志信息',
             height: 'full-200',
             page: true,
             cols: [ [

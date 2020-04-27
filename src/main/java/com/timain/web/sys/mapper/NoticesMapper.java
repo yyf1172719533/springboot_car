@@ -12,6 +12,5 @@ import java.util.List;
  * @date 2020/4/24 9:10
  */
 public interface NoticesMapper extends JpaRepository<Notices, Integer>, JpaSpecificationExecutor {
-
     
 }

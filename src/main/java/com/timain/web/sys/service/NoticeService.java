@@ -1,6 +1,7 @@
 package com.timain.web.sys.service;
 
 import com.timain.web.sys.common.DataGridView;
+import com.timain.web.sys.pojo.Notices;
 import com.timain.web.sys.vo.NoticeVO;
 
 /**
@@ -16,4 +17,16 @@ public interface NoticeService {
      * @return
      */
     DataGridView findAllNotices(NoticeVO noticeVO);
+
+    /**
+     * 添加或修改公告
+     * @param notices
+     */
+    void saveOrUpdateNotice(Notices notices);
+
+    /**
+     * 根据ID删除公告
+     * @param id
+     */
+    void deleteNotice(Integer id);
 }

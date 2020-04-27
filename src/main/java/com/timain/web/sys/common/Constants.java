@@ -24,7 +24,7 @@ public class Constants {
      * 状态码
      */
     public static final Integer OK = 200;
-    public static final Integer ERROR = 200;
+    public static final Integer ERROR = -1;
 
     /**
      * 是否展开

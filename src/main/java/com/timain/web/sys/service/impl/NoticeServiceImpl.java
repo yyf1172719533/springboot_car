@@ -10,12 +10,10 @@ import com.timain.web.sys.vo.NoticeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +24,7 @@ import java.util.List;
  * @date 2020/4/24 9:11
  */
 @Service
+@Transactional
 public class NoticeServiceImpl implements NoticeService {
     
     @Autowired
@@ -95,4 +94,25 @@ public class NoticeServiceImpl implements NoticeService {
         }, pageRequest);
         return new DataGridView(page.getTotalElements(), page.getContent());
     }
+
+    /**
+     * 添加或修改公告
+     *
+     * @param notices
+     */
+    @Override
+    public void saveOrUpdateNotice(Notices notices) {
+        this.noticesMapper.save(notices);
+    }
+
+    /**
+     * 根据ID删除公告
+     *
+     * @param id
+     */
+    @Override
+    public void deleteNotice(Integer id) {
+        this.noticesMapper.deleteById(id);
+    }
+
 }

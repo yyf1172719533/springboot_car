@@ -13,8 +13,8 @@ import java.util.Date;
  * @date 2020/4/24 9:07
  */
 @Data
-@Entity
 @Table(name = "sys_notices")
+@Entity
 public class Notices implements Serializable {
     
     private static final long serialVersionUID = 4710454384998350131L;

@@ -1,14 +1,10 @@
 package com.timain.web.sys.vo;
 
-import com.timain.web.sys.pojo.Notices;
+import com.timain.web.sys.pojo.LoginInfo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.IdClass;
-import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -18,7 +14,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class NoticeVO extends Notices {
+public class LogInfoVO extends LoginInfo {
     
     private static final long serialVersionUID = -2605597468467769369L;
     

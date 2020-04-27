@@ -56,4 +56,13 @@ public class SysController {
     public String toNoticesManager() {
         return "sys/notices/NoticesInfo";
     }
+
+    /**
+     * 跳转到日志管理页面
+     * @return
+     */
+    @RequestMapping("toLogInfoManager")
+    public String toLogInfoManager() {
+        return "sys/logInfo/LogInfo";
+    }
 }
