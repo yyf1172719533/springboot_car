@@ -2,6 +2,7 @@ package com.timain.web.sys.controller;
 
 import com.timain.web.sys.common.DataGridView;
 import com.timain.web.sys.service.UserService;
+import com.timain.web.sys.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +26,15 @@ public class UserController {
     @RequestMapping("findUserCount")
     public DataGridView findUserCount() {
         return new DataGridView(userService.findCount(), null);
+    }
+
+    /**
+     * 条件分页查询所有用户信息
+     * @param userVO
+     * @return
+     */
+    @RequestMapping("findAllUsers")
+    public DataGridView findAllUsers(UserVO userVO) {
+        return userService.findAll(userVO);
     }
 }

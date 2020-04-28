@@ -1,15 +1,20 @@
 package com.timain.web.sys.service.impl;
 
 import com.timain.web.sys.common.Constants;
+import com.timain.web.sys.common.DataGridView;
 import com.timain.web.sys.mapper.UserMapper;
 import com.timain.web.sys.pojo.Menu;
 import com.timain.web.sys.pojo.Role;
 import com.timain.web.sys.pojo.User;
 import com.timain.web.sys.service.RoleService;
 import com.timain.web.sys.service.UserService;
+import com.timain.web.sys.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -96,14 +101,56 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 根据用户ID查询拥有菜单
+     * 条件分页查询用户信息
      *
-     * @param userId
+     * @param userVO
      * @return
-     *//*
+     */
     @Override
-    public Set<Menu> findMenusByUserId(Integer userId) {
-        Optional<User> optional = userMapper.findById(userId);
-        return optional.get().getMenus();
-    }*/
+    public DataGridView findAll(UserVO userVO) {
+        PageRequest pageRequest = PageRequest.of(userVO.getPage() - 1, userVO.getLimit());
+        Page<User> page = this.userMapper.findAll((root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+            if (null!=userVO.getRealName() && userVO.getRealName()!="") {
+                predicateList.add(
+                        criteriaBuilder.and(
+                                criteriaBuilder.like(
+                                        root.get("realName"), "%" + userVO.getRealName() + "%"
+                                )
+                        )
+                );
+            }
+            if (null!=userVO.getLoginName() && userVO.getLoginName()!="") {
+                predicateList.add(
+                        criteriaBuilder.and(
+                                criteriaBuilder.like(
+                                        root.get("loginName"), "%" + userVO.getLoginName() + "%"
+                                )
+                        )
+                );
+            }
+            if (null!=userVO.getAddress() && userVO.getAddress()!="") {
+                predicateList.add(
+                        criteriaBuilder.and(
+                                criteriaBuilder.like(
+                                        root.get("address"), "%" + userVO.getAddress() + "%"
+                                )
+                        )
+                );
+            }
+            if (null!=userVO.getPosition() && userVO.getPosition()!="") {
+                predicateList.add(
+                        criteriaBuilder.and(
+                                criteriaBuilder.like(
+                                        root.get("position"), "%" + userVO.getPosition() + "%"
+                                )
+                        )
+                );
+            }
+            return criteriaBuilder.and(
+                    predicateList.toArray(new Predicate[predicateList.size()])
+            );
+        }, pageRequest);
+        return new DataGridView(page.getTotalElements(), page.getContent());
+    }
 }

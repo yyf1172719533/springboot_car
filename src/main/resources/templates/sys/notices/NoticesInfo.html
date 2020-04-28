@@ -253,7 +253,6 @@
                             ids += '&ids=' + item.id;
                         }
                     })
-                    alert(ids);
                     $.post('/notice/deleteBachByIds', ids, function (obj) {
                         layer.msg(obj.msg);
                         tableInfos.reload();

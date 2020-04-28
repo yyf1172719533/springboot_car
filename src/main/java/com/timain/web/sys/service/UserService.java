@@ -1,8 +1,10 @@
 package com.timain.web.sys.service;
 
+import com.timain.web.sys.common.DataGridView;
 import com.timain.web.sys.pojo.Menu;
 import com.timain.web.sys.pojo.Role;
 import com.timain.web.sys.pojo.User;
+import com.timain.web.sys.vo.UserVO;
 
 import java.util.List;
 import java.util.Set;
@@ -47,4 +49,11 @@ public interface UserService {
      * @return
      */
     List<Menu> findMenusAvailable(Integer userId);
+
+    /**
+     * 条件分页查询用户信息
+     * @param userVO
+     * @return
+     */
+    DataGridView findAll(UserVO userVO);
 }

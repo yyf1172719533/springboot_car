@@ -92,7 +92,6 @@ public class NoticeController {
      */
     @RequestMapping("deleteBachByIds")
     public ResultObj deleteBachByIds(NoticeVO noticeVO) {
-        System.out.println(noticeVO.getIds());
         try {
             Integer[] ids = noticeVO.getIds();
             System.out.println(ids);
