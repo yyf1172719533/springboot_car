@@ -31,4 +31,10 @@ public class Constants {
      */
     public static final Integer SPREAD_TRUE = 1;
     public static final Integer SPREAD_FALSE = 0;
+
+    /**
+     * 用户默认密码
+     */
+    public static final String USER_DEFAULT_PWD = "123456";
+
 }

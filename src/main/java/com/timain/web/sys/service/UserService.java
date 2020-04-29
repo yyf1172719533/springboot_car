@@ -56,4 +56,29 @@ public interface UserService {
      * @return
      */
     DataGridView findAll(UserVO userVO);
+
+    /**
+     * 添加或修改用户
+     * @param user
+     */
+    void saveOrUpdate(User user);
+
+    /**
+     * 根据ID删除用户
+     * @param userId
+     */
+    void deleteUser(Integer userId);
+
+    /**
+     * 根据ID重置用户密码
+     * @param user
+     */
+    void changePwd(User user);
+
+    /**
+     * 根据ID查询用户
+     * @param userId
+     * @return
+     */
+    User getUser(Integer userId);
 }

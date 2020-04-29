@@ -153,4 +153,46 @@ public class UserServiceImpl implements UserService {
         }, pageRequest);
         return new DataGridView(page.getTotalElements(), page.getContent());
     }
+
+    /**
+     * 添加或修改用户
+     *
+     * @param user
+     */
+    @Override
+    public void saveOrUpdate(User user) {
+        this.userMapper.save(user);
+    }
+
+    /**
+     * 根据ID删除用户
+     *
+     * @param userId
+     */
+    @Override
+    public void deleteUser(Integer userId) {
+        this.userMapper.deleteById(userId);
+    }
+
+    /**
+     * 根据ID重置用户密码
+     *
+     * @param user
+     */
+    @Override
+    public void changePwd(User user) {
+        this.userMapper.saveAndFlush(user);
+    }
+
+    /**
+     * 根据ID查询用户
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public User getUser(Integer userId) {
+        return this.userMapper.findById(userId).get();
+    }
+
 }

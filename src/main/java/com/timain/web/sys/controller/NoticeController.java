@@ -53,7 +53,12 @@ public class NoticeController {
             return ResultObj.ADD_ERROR;
         }
     }
-    
+
+    /**
+     * 修改公告
+     * @param notices
+     * @return
+     */
     @RequestMapping("updateNotice")
     public ResultObj updateNotice(Notices notices) {
         try {

@@ -78,22 +78,22 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">用户名称</label>
 				<div class="layui-input-inline">
-					<input type="text" name="id" style="display: none"/>
-					<input type="text" name="realName" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入用户名称">
+					<input type="text" name="userId" style="display: none"/>
+					<input type="text" name="realName" id="realName" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入用户名称">
 				</div>
 			</div>
 			<div class="layui-inline">
 				<label class="layui-form-label">登录名称</label>
 				<div class="layui-input-inline">
-					<input type="text" name="loginName" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入登录名称">
+					<input type="text" name="loginName" id="loginName" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入登录名称">
 				</div>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-inline">
-				<label class="layui-form-label">用户认证</label>
+				<label class="layui-form-label">用户级别</label>
 				<div class="layui-input-inline">
-					<input type="text" name="identity" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入用户认证">
+					<input type="text" name="position" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入用户级别">
 				</div>
 			</div>
 			<div class="layui-inline">
@@ -217,9 +217,18 @@
 				area: ['800px', '500px'],
 				success: function () {
 					$('#dataFrm')[0].reset();
+					url="/user/addUser";
 				}
 			})
 		}
+		
+		//监听填写用户名称时失去焦点事件
+		$('#realName').on('blur', function () {
+			var realName = $(this).val();
+			$.get('/user/ChineseToPinYin', {realName: realName}, function (res) {
+				$('#loginName').val(res.value);
+			})
+		})
 		
 		//打开修改用户的弹出层
 		function openUpdateUser(data) {
@@ -229,24 +238,51 @@
 				area: ['800px', '500px'],
 				success: function () {
 					form.val('dataFrm', data);
+					url="/user/updateUser";
 				}
 			})
 		}
 		
 		//删除用户
 		function deleteUser(data) {
-
+			layer.confirm('您确定删除此用户吗？', {icon: 3, title: '提示'}, function (index) {
+				$.post('/user/deleteUser', {userId: data.userId}, function (res) {
+					if (res.code==200) {
+						tableIns.reload();
+					}
+					layer.msg(res.msg);
+					layer.close(index);
+				})
+			})
 		}
 		
 		//重置密码
 		function changeUserPwd(data) {
-
+			layer.confirm('您确定重置此用户密码吗？', {icon: 3, title: '提示'}, function (index) {
+				$.post('/user/changePwd', {userId: data.userId}, function (res) {
+					if (res.code==200) {
+						layer.msg(res.msg);
+					}
+					layer.close(index);
+				})
+			})
 		}
 		
 		//分配角色
 		function selectRole(data) {
 
 		}
+		
+		//监听提交事件
+		form.on('submit(doSubmit)', function (data) {
+			$.post(url, data.field, function (res) {
+				if (res.code==200) {
+					tableIns.reload();
+				}
+				layer.msg(res.msg);
+				layer.close(mainIndex);
+			})
+		})
 	})
 </script>
 </body>

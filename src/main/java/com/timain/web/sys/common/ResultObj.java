@@ -31,4 +31,7 @@ public class ResultObj {
 
     public static final ResultObj DELETE_SUCCESS = new ResultObj(Constants.OK, "删除成功");
     public static final ResultObj DELETE_ERROR = new ResultObj(Constants.OK, "删除失败");
+    
+    public static final ResultObj RESERT_PWD_SUCCESS = new ResultObj(Constants.OK, "重置密码成功");
+    public static final ResultObj RESERT_PWD_ERROR = new ResultObj(Constants.OK, "重置密码失败");
 }

@@ -1,6 +1,7 @@
 package com.timain.web.sys.mapper;
 
 import com.timain.web.sys.pojo.User;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
