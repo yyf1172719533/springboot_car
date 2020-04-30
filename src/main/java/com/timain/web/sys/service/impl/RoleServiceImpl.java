@@ -7,8 +7,7 @@ import com.timain.web.sys.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Author yyf
@@ -31,5 +30,16 @@ public class RoleServiceImpl implements RoleService {
     public Set<Menu> findMenusByRoleId(Integer roleId) {
         Optional<Role> optional = this.roleMapper.findById(roleId);
         return optional.get().getMenus();
+    }
+
+    /**
+     * 根据条件查询所有角色信息
+     *
+     * @param available
+     * @return
+     */
+    @Override
+    public List<Role> findAll(Integer available) {
+        return this.roleMapper.findAllByAvailable(available);
     }
 }

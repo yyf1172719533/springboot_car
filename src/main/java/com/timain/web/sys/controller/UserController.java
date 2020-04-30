@@ -3,9 +3,12 @@ package com.timain.web.sys.controller;
 import com.timain.web.sys.common.Constants;
 import com.timain.web.sys.common.DataGridView;
 import com.timain.web.sys.common.ResultObj;
+import com.timain.web.sys.pojo.Role;
 import com.timain.web.sys.pojo.User;
+import com.timain.web.sys.service.RoleService;
 import com.timain.web.sys.service.UserService;
 import com.timain.web.sys.utils.PinYinUtils;
+import com.timain.web.sys.utils.WebUtils;
 import com.timain.web.sys.vo.UserVO;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.util.ByteSource;
@@ -13,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static cn.hutool.core.collection.CollUtil.toList;
 
 /**
  * @author yyf
@@ -27,6 +31,8 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 查询用户总数
@@ -109,6 +115,10 @@ public class UserController {
     @RequestMapping("deleteUser")
     public ResultObj deleteUser(Integer userId) {
         try {
+            User user = this.userService.getUser(userId);
+            if (user.getRealName().equals("超级管理员")) {
+                return ResultObj.NOT_DELETE_SUPER;
+            }
             this.userService.deleteUser(userId);
             return ResultObj.DELETE_SUCCESS;
         } catch (Exception e) {
@@ -134,5 +144,28 @@ public class UserController {
             e.printStackTrace();
             return ResultObj.RESERT_PWD_ERROR;
         }
+    }
+    
+    @RequestMapping("initRoleByUserId")
+    public DataGridView initRoleByUserId(Integer userId) {
+        //查询所有可用的角色列表
+        List<Role> roleList = this.roleService.findAll(Constants.AVAILABLE_TRUE);
+        Set<Role> roleSet = this.userService.findRolesByUserId(userId);
+        Map<Object, Object> map = new LinkedHashMap<>();
+        for (Role role : roleList) {
+            map.put(role.getRoleId() - 1, role);
+        }
+        map.forEach((o, o2) -> {
+            Role role = (Role) map.get(o);
+            Boolean LAY_CHECKED = false;
+            for (Role role1 : roleSet) {
+                if (role1.getRoleId()==role.getRoleId()) {
+                    LAY_CHECKED = true;
+                    break;
+                }
+            }
+            ((Role) map.get(o)).setLAY_CHECKED(LAY_CHECKED);
+        });
+        return new DataGridView(Long.valueOf(map.size()), map);
     }
 }

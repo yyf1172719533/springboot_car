@@ -3,6 +3,8 @@ package com.timain.web.sys.service;
 import com.timain.web.sys.pojo.Menu;
 import com.timain.web.sys.pojo.Role;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -18,4 +20,10 @@ public interface RoleService {
      * @return
      */
     Set<Menu> findMenusByRoleId(Integer roleId);
+
+    /**
+     * 根据条件查询所有角色信息
+     * @return
+     */
+    List<Role> findAll(Integer available);
 }

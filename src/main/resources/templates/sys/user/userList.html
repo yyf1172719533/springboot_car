@@ -33,13 +33,13 @@
 				</div>
 			</div>
 			<div class="layui-inline">
-				<label class="layui-form-label">地址</label>
+				<label class="layui-form-label">用户地址</label>
 				<div class="layui-input-inline">
 					<input type="text" name="address" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline">
-				<label class="layui-form-label">级别</label>
+				<label class="layui-form-label">用户级别</label>
 				<div class="layui-input-inline">
 					<input type="text" name="position" autocomplete="off" class="layui-input">
 				</div>
@@ -141,6 +141,12 @@
 </div>
 <!-- 添加和修改的弹出层结束 -->
 
+<!-- 角色分配弹出层开始 -->
+<div style="display: none;padding: 5px;" id="selectRole">
+	<table class="layui-hide" id="roleInfoTable" lay-filter="roleInfoTable"></table>
+</div>
+<!-- 角色分配弹出层结束 -->
+
 
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
 <script type="text/javascript">
@@ -178,6 +184,16 @@
 				{field: 'right', title: '操作', align: 'center', toolbar: '#userInfoRowBar', width: 400},
 			] ]
 		});
+		
+		//模糊查询
+		form.on('submit(doSearch)', function (data) {
+			tableIns.reload({
+				where: data.field,
+				page: {
+					curr: 1
+				}
+			})
+		})
 		
 		//监听头工具栏事件
 		table.on('toolbar(userInfoTable)', function (obj) {
@@ -268,9 +284,41 @@
 			})
 		}
 		
-		//分配角色
+		//打开分配角色弹出层
 		function selectRole(data) {
-
+			mainIndex = layer.open({
+				type: 1,
+				title: '分配【' + data.realName + '】用户的角色',
+				content: $('#selectRole'),
+				area: ['800px', '500px'],
+				btn: ['分配', '取消'],
+				yes: function(index, layero){
+					var checkStatus = table.checkStatus('roleInfoTable');
+					console.log(checkStatus.data) //获取选中行的数据
+				},
+				btnAlign: 'c',
+				success: function () {
+					initRoleTable(data);
+				}
+			})
+		}
+		
+		var roleTableInfos;
+		//初始化角色数据表格
+		function initRoleTable(data) {
+			roleTableInfos = table.render({
+				elem: '#roleInfoTable',
+				url: '/user/initRoleByUserId',
+				where: {
+					userId: data.userId,
+				},
+				cols: [ [
+					{type:'checkbox'},
+					{field: 'roleId', title: 'ID', align: 'center',width: '200'},
+					{field: 'roleName', title: '角色名称', align: 'center',width: '200'},
+					{field: 'roleDesc', title: '角色备注', align: 'center', width: '300'},
+				] ]
+			});
 		}
 		
 		//监听提交事件

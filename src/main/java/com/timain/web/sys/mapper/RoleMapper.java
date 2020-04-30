@@ -3,6 +3,9 @@ package com.timain.web.sys.mapper;
 import com.timain.web.sys.pojo.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * @Author yyf
@@ -10,5 +13,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date 2020/4/22 0022 19:13
  */
 public interface RoleMapper extends JpaRepository<Role, Integer> {
+
+    /**
+     * 根据available查询角色列表
+     * @param available
+     * @return
+     */
+    List<Role> findAllByAvailable(Integer available);
 
 }

@@ -38,4 +38,7 @@ public class Role implements Serializable {
     @JoinTable(name = "sys_role_menu", joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "roleId")},
             inverseJoinColumns = {@JoinColumn(name = "menu_id", referencedColumnName = "id")})
     private Set<Menu> menus;
+    
+    @Transient
+    private Boolean LAY_CHECKED;
 }
