@@ -65,4 +65,13 @@ public class SysController {
     public String toLogInfoManager() {
         return "sys/logInfo/LogInfo";
     }
+
+    /**
+     * 跳转到角色管理页面
+     * @return
+     */
+    @RequestMapping("toRoleManager")
+    public String toRoleManager() {
+        return "sys/role/roleList";
+    }
 }

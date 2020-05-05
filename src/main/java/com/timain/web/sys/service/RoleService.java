@@ -1,7 +1,9 @@
 package com.timain.web.sys.service;
 
+import com.timain.web.sys.common.DataGridView;
 import com.timain.web.sys.pojo.Menu;
 import com.timain.web.sys.pojo.Role;
+import com.timain.web.sys.vo.RoleVO;
 
 import java.util.List;
 import java.util.Map;
@@ -26,4 +28,11 @@ public interface RoleService {
      * @return
      */
     List<Role> findAll(Integer available);
+
+    /**
+     * 分页条件查询角色列表
+     * @param roleVO
+     * @return
+     */
+    DataGridView queryAllBySome(RoleVO roleVO);
 }
