@@ -92,4 +92,41 @@ public class RoleServiceImpl implements RoleService {
         }, pageRequest);
         return new DataGridView(page.getTotalElements(), page.getContent());
     }
+
+    /**
+     * 添加或修改角色信息
+     *
+     * @param role
+     */
+    @Override
+    public void saveOrUpdateRole(Role role) {
+        this.roleMapper.saveAndFlush(role);
+    }
+
+    /**
+     * 删除角色信息
+     *
+     * @param roleId
+     */
+    @Override
+    public void deleteRole(Integer roleId) {
+        this.roleMapper.deleteById(roleId);
+    }
+
+    /**
+     * 根据ID分配角色菜单权限
+     *
+     * @param roleId
+     * @param menuIds
+     */
+    @Override
+    public void saveRoleMenu(Integer roleId, Integer[] menuIds) {
+        //先根据角色ID删除原有的菜单权限
+        this.roleMapper.deleteById(roleId);
+        if (null!=menuIds && menuIds.length>0) {
+            
+        }
+    }
+
+
 }

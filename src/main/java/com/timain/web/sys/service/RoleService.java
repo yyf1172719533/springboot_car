@@ -35,4 +35,23 @@ public interface RoleService {
      * @return
      */
     DataGridView queryAllBySome(RoleVO roleVO);
+
+    /**
+     * 添加或修改角色信息
+     * @param role
+     */
+    void saveOrUpdateRole(Role role);
+
+    /**
+     * 删除角色信息
+     * @param roleId
+     */
+    void deleteRole(Integer roleId);
+
+    /**
+     * 根据ID分配角色菜单权限
+     * @param roleId
+     * @param menuIds
+     */
+    void saveRoleMenu(Integer roleId, Integer[] menuIds);
 }

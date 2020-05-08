@@ -11,6 +11,8 @@
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="/resources/css/public.css" media="all" />
+	<link rel="stylesheet" href="/resources/layui_ext/dtree/dtree.css" media="all"/>
+	<link rel="stylesheet" href="/resources/layui_ext/dtree/font/dtreefont.css"/>
 </head>
 <body class="childrenBody">
 <!-- 查询条件开始 -->
@@ -59,7 +61,7 @@
 	<div id="roleInfoRowBar" style="display: none;">
 		<button type="button" lay-event="update" class="layui-btn layui-btn-sm layui-btn-normal"><span class="layui-icon layui-icon-edit"></span>修改</button>
 		<button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>删除</button>
-		<button type="button" lay-event="selectRole" class="layui-btn layui-btn-sm layui-btn"><span class="layui-icon layui-icon-delete"></span>角色分配</button>
+		<button type="button" lay-event="selectRole" class="layui-btn layui-btn-sm layui-btn"><span class="layui-icon layui-icon-delete"></span>菜单分配</button>
 	</div>
 </div>
 <!-- 数据表格结束 -->
@@ -102,20 +104,23 @@
 </div>
 <!-- 添加和修改的弹出层结束 -->
 
-<!-- 角色分配弹出层开始 -->
-<!--<div style="display: none;padding: 5px;" id="selectRole">
-	<table class="layui-hide" id="roleInfoTable" lay-filter="roleInfoTable"></table>
-</div>-->
-<!-- 角色分配弹出层结束 -->
+<!-- 菜单分配弹出层开始 -->
+<div style="display: none" id="selectMenuDiv">
+	<ul id="menuTree" class="dtree" data-id="0"></ul>
+</div>
+<!-- 菜单分配弹出层结束 -->
 
 
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
 <script type="text/javascript">
-	layui.use(['form','layer','table','jquery'],function(){
+	layui.extend({
+		dtree: '/resources/layui_ext/dtree/dtree'   // {/}的意思即代表采用自有路径，即不跟随 base 路径
+	}).use(['form','layer','table','jquery', 'dtree'],function(){
 		var $ = layui.jquery;
 		var table = layui.table;
 		var layer = layui.layer;
 		var form = layui.form;
+		var dtree = layui.dtree;
 
 		//用户列表
 		var tableIns = table.render({
@@ -181,18 +186,10 @@
 				area: ['800px', '400px'],
 				success: function () {
 					$('#dataFrm')[0].reset();
-					url="/user/addUser";
+					url="/role/addRole";
 				}
 			})
 		}
-		
-		//监听填写用户名称时失去焦点事件
-		$('#realName').on('blur', function () {
-			var realName = $(this).val();
-			$.get('/user/ChineseToPinYin', {realName: realName}, function (res) {
-				$('#loginName').val(res.value);
-			})
-		})
 		
 		//打开修改用户的弹出层
 		function openUpdateRole(data) {
@@ -202,7 +199,7 @@
 				area: ['800px', '400px'],
 				success: function () {
 					form.val('dataFrm', data);
-					url="/user/updateUser";
+					url="/role/updateRole";
 				}
 			})
 		}
@@ -210,7 +207,7 @@
 		//删除角色
 		function deleteRole(data) {
 			layer.confirm('您确定删除此角色吗？', {icon: 3, title: '提示'}, function (index) {
-				$.post('/role/deleteRole', {userId: data.userId}, function (res) {
+				$.post('/role/deleteRole', {roleId: data.roleId}, function (res) {
 					if (res.code==200) {
 						tableIns.reload();
 					}
@@ -224,36 +221,42 @@
 		function selectRole(data) {
 			mainIndex = layer.open({
 				type: 1,
-				title: '分配【' + data.realName + '】用户的角色',
-				content: $('#selectRole'),
-				area: ['800px', '500px'],
+				title: '分配【' + data.roleName + '】用户的角色',
+				content: $('#selectMenuDiv'),
+				area: ['400px', '500px'],
 				btn: ['分配', '取消'],
 				yes: function(index, layero){
-					var checkStatus = table.checkStatus('roleInfoTable');
-					console.log(checkStatus.data) //获取选中行的数据
+					var params = dtree.getCheckbarNodesParam("menuTree");
+					console.log(params);
+					var paramsId = "roleId=" + data.roleId;
+					$.each(params, function (index, item) {
+						paramsId += "&menuIds=" + item.nodeId;
+					})
+					$.post('/role/saveRoleMenu', paramsId, function (res) {
+						if (res.code==200) {
+							layer.msg(res.msg);
+						}
+						layer.close(index);
+					})
 				},
 				btnAlign: 'c',
 				success: function () {
-					initRoleTable(data);
+					initMenuTable(data);
 				}
 			})
 		}
 		
-		var roleTableInfos;
+		var menuInfos;
 		//初始化角色数据表格
-		function initRoleTable(data) {
-			roleTableInfos = table.render({
-				elem: '#roleInfoTable',
-				url: '/user/initRoleByUserId',
-				where: {
-					userId: data.userId,
-				},
-				cols: [ [
-					{type:'checkbox'},
-					{field: 'roleId', title: 'ID', align: 'center',width: '200'},
-					{field: 'roleName', title: '角色名称', align: 'center',width: '200'},
-					{field: 'roleDesc', title: '角色备注', align: 'center', width: '300'},
-				] ]
+		function initMenuTable(data) {
+			menuInfos = dtree.render({
+				elem: '#menuTree',
+				url: '/role/initMenuByRoleId?roleId=' + data.roleId,
+				dataStyle: "layuiStyle",  //使用layui风格的数据格式
+				dataFormat: "list",  //配置data的风格为list
+				response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
+				checkbar:true, //开启复选框
+				checkbarType: "all"
 			});
 		}
 		

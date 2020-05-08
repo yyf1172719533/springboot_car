@@ -30,6 +30,8 @@ public class TreeNode implements Serializable {
     private Boolean spread;
     private String target;
     private List<TreeNode> children = new ArrayList<>();
+    
+    private String checkArr = "0"; //0-未选中 1-选中
 
     /**
      * 首页左边的导航树
@@ -49,5 +51,21 @@ public class TreeNode implements Serializable {
         this.href = href;
         this.spread = spread;
         this.target = target;
+    }
+
+    /**
+     * dtree复选树
+     * @param id
+     * @param pId
+     * @param title
+     * @param spread
+     * @param checkArr
+     */
+    public TreeNode(Integer id, Integer pId, String title, Boolean spread, String checkArr) {
+        this.id = id;
+        this.pId = pId;
+        this.title = title;
+        this.spread = spread;
+        this.checkArr = checkArr;
     }
 }
