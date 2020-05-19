@@ -99,7 +99,6 @@ public class NoticeController {
     public ResultObj deleteBachByIds(NoticeVO noticeVO) {
         try {
             Integer[] ids = noticeVO.getIds();
-            System.out.println(ids);
             for (Integer id : ids) {
                 this.noticeService.deleteNotice(id);
             }

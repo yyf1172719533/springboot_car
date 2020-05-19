@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,6 +40,12 @@ class RoleServiceImplTest {
         roleVO.setRoleName("业务");
         DataGridView dataGridView = this.roleService.queryAllBySome(roleVO);
         System.out.println(dataGridView);
+    }
+    
+    @Test
+    @Transactional
+    void testSaveRoleMenu() {
+        this.roleService.saveRoleMenu(1, null);
     }
     
 }

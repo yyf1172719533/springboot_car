@@ -122,10 +122,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void saveRoleMenu(Integer roleId, Integer[] menuIds) {
         //先根据角色ID删除原有的菜单权限
-        this.roleMapper.deleteById(roleId);
-        if (null!=menuIds && menuIds.length>0) {
+        this.roleMapper.findById(roleId).get().getMenus().remove(roleId);
+        /*if (null!=menuIds && menuIds.length>0) {
             
-        }
+        }*/
     }
 
 

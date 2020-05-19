@@ -105,7 +105,16 @@
                 {field: 'loginIp', title: '登录IP', align: 'center'},
                 {field: 'loginTime', title: '登录时间', align: 'center'},
                 {field: 'right', title: '操作', align: 'center', toolbar: '#loginInfoRowBar'},
-            ] ]
+            ] ],
+            done:function (data, curr) {
+                if (data.data.length==0 && curr!=1) {
+                    tableInfos.reload({
+                        page: {
+                            curr: curr - 1
+                        }
+                    })
+                }
+            }
         });
         
         //模糊查询
